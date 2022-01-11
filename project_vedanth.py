@@ -5,7 +5,7 @@ def Teacher():
     loot=Tk()
     tlabel=Label(loot,text='Welcome to teachers login page')
     tlabel.config(font=('Helvetica bold',40))
-    tlabel.pack()
+    tlabel.pack()     jhdfxgfs
     te1=Entry(loot,width=50,borderwidth=1)
     te1.insert(0,'Enter Password: ')
     te1.pack()
