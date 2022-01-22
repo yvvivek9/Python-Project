@@ -11,19 +11,23 @@ def Student():
     te1.insert(0,'Enter SRN: ')
     te1.pack()
     def Sview():
-        with open('STUDENT.DAT','rb') as F:
-              R=pickle.load(F)
-              for i in R:
-                    if te1.get()==i[0]:
-                        loot.destroy()
-                        t_1=Tk()
-                        mylabel31=Label(t_1,text=i)
-                        mylabel31.pack()
-            
-                    else:
-                        mylabel3=Label(loot,text='Student not found')
-                        mylabel3.pack()
-        
+        with open("STUDENT.DAT","rb") as F:
+            c=False
+            try:
+                while not c:
+                      R=pickle.load(F)
+                      for i in R:
+                          if te1.get()==i[0]:
+                                loot.destroy()
+                                t_1=Tk()
+                                mylabel31=Label(t_1,text=i)
+                                mylabel31.pack()
+                                c=True
+                                break
+            except:
+                mylabel3=Label(loot,text='Student not found')
+                mylabel3.pack()
+                
     tb1=Button(loot,text='Login',command=Sview)
     tb1.pack()
     loot.mainloop()
@@ -40,7 +44,7 @@ def Teacher():
         if se1.get()=='admin123':
             noot.destroy()
             addorsee=Tk()
-            mylabel12=Label(addorsee,text='Would you like to add students or edit existing ones')
+            mylabel12=Label(addorsee,text='Would you like to add students or delete existing ones')
             mylabel12.pack()
             def Add():
                 add_1=Tk()
@@ -84,11 +88,10 @@ def Teacher():
                         markse=ae7.get()
                         marksme=ae8.get()
                         marksev=ae9.get()
-                        if srn.isalnum() and name.isalpha() and sem.isdigit() and marksp.isdigit() and marksm.isdigit() and marksme.isdigit() and marksc.isdigit() and markse.isdigit() and marksev.isdigit():
+                        if srn.isalnum() and (name.isalpha() or ' ') and sem.isdigit() and marksp.isdigit() and marksm.isdigit() and marksme.isdigit() and marksc.isdigit() and markse.isdigit() and marksev.isdigit():
                               with open("STUDENT.DAT","ab") as F:
                                     R=[]
                                     R.append([srn,name,sem,marksp,marksm,marksc,markse,marksme,marksev])
-                                
                                     pickle.dump(R,F)
                               add_1.destroy()
                           
@@ -101,12 +104,10 @@ def Teacher():
             addb1=Button(addorsee,text='Add new',command=Add)
             addb1.pack()
             def Delete():
-                  with open ('STUDENT.DAT','rb+') as F:
+                  with open ("STUDENT.DAT","rb+") as F:
                         R=pickle.load(F)
                         for i in R:
                               if de1.get()==i[0]:
-                                    mylabel45=Label(addorsee,text=i[1]+'is about to be deleted')
-                                    mylabel45.pack()
                                     del i
                               else:
                                     mylabel46=Label(addorsee,text='Student not found')
@@ -140,18 +141,11 @@ button1.pack()
 button2=Button(root,text='Student',command=Student)
 button2.pack()
 
+root.mainloop()
 
 
 
 
 
 
-
-
-                
-                mylabel4=Label(add_1,text='Wrong entries')
-                mylabel4.pack()
-        ba1=Button(add_1,text='Save',command=Save)
-        ba1.pack()
-        add_1.mainloop()
-        '''
+        
